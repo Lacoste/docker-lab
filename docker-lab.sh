@@ -134,17 +134,17 @@ check_system() {
   fi
 
     # Check for Python in Homebrew:
-  echo -n "Python:                               "
-  if brew list python &> /dev/null; then
-    echo -e "$COL_GREEN[ OK ]$COL_RESET"
+  # echo -n "Python:                               "
+  # if brew list python &> /dev/null; then
+  #  echo -e "$COL_GREEN[ OK ]$COL_RESET"
 
-  else
-    echo -e "$COL_RED[ Missing ]$COL_RESET"
-    echo "Installing Python..."
-    brew install python >> $LOGFILE 2>&1
-    echo ""
-    STATE=Bad
-  fi
+  # else
+  #   echo -e "$COL_RED[ Missing ]$COL_RESET"
+  #   echo "Installing Python..."
+  #   brew install python >> $LOGFILE 2>&1
+  #   echo ""
+  #   STATE=Bad
+  # fi
 
   # Check for Packer in Homebrew:
   echo -n "Packer:                               "

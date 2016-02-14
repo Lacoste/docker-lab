@@ -1,5 +1,5 @@
 
-### Docker Lab Installer v1.0
+### Docker Lab Installer v1.1
 ![alt text](http://static1.squarespace.com/static/50203aca84ae954efd2f9b70/t/55dd50b3e4b087612e6d759e/1455081593314/?format=250w "cloudcanuck")
 ###### Author: Paul Gifford <pgifford@vmware.com>
 ###### Blog Post: http://www.cloudcanuck.ca/posts/docker-lab-installer
@@ -12,6 +12,7 @@
   - Internet Access
 
 ###### Changelog:
+  - 1.1 Removed Python Installer 
   - 1.0 Initial Build
 
 ###### Install:
