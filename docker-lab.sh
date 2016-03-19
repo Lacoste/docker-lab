@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 # =============================================================================
-# Docker Lab Installer v1.0
+# Docker Lab Installer v1.2
 # =============================================================================
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
@@ -18,13 +18,15 @@
 #
 # AppCatalyst Lab: Automated install of Docker Lab
 # Author: Paul Gifford <pgifford@vmware.com>
-# Blog Post: http://www.cloudcanuck.ca/posts/appacatalyst-lab-installer
+# Blog Post: http://www.cloudcanuck.ca/posts/docker-lab-installer
 # Lessons Learned from: Sebastian Weigand <sweigand@vmware.com>
 #
 
 LOGFILE=docker_lab_install.log
 VAGRANT_URL=https://releases.hashicorp.com/vagrant/1.8.1/vagrant_1.8.1.dmg
-DOCKERTOOLBOX_URL=https://github.com/docker/toolbox/releases/download/v1.10.1/DockerToolbox-1.10.1.pkg
+VAGRANT_PACKAGE=vagrant_1.8.1.dmg
+DOCKERTOOLBOX_URL=https://github.com/docker/toolbox/releases/download/v1.10.3/DockerToolbox-1.10.3.pkg
+DOCKER_PKG=DockerToolbox-1.10.3.pkg
 
 # Colors
 ESC_SEQ="\x1b["
@@ -37,7 +39,7 @@ COL_MAGENTA=$ESC_SEQ"35;01m"
 
 clear
 echo ""
-echo -e "$COL_GREEN Docker Lab Installer v1.0 $COL_RESET"
+echo -e "$COL_GREEN Docker Lab Installer v1.2 $COL_RESET"
 echo ""
 read -p "Press [Enter] to begin..."
 
@@ -83,7 +85,7 @@ check_system() {
   echo -n "Homebrew:                             "
   if command -v brew &> /dev/null; then
     echo -e "$COL_GREEN[ OK ]$COL_RESET"
-
+    brew update >> $LOGFILE 2>&1
   # No Homebrew:
   else
     echo -e "$COL_RED[ Missing ]$COL_RESET"
@@ -101,7 +103,7 @@ check_system() {
 
   else
     echo -e "$COL_RED[ Missing ]$COL_RESET"
-    echo "Installing wget..."
+    echo "Installing wget with brew..."
     brew install wget >> $LOGFILE 2>&1
     echo ""
     STATE=Bad
@@ -114,7 +116,7 @@ check_system() {
 
   else
     echo -e "$COL_RED[ Missing ]$COL_RESET"
-    echo "Installing git..."
+    echo "Installing git with brew..."
     brew install git >> $LOGFILE 2>&1
     echo ""
     STATE=Bad
@@ -127,24 +129,37 @@ check_system() {
 
   else
     echo -e "$COL_RED[ Missing ]$COL_RESET"
-    echo "Installing Ansible..."
+    echo "Installing Ansible with brew..."
     brew install ansible >> $LOGFILE 2>&1
     echo ""
     STATE=Bad
   fi
 
     # Check for Python in Homebrew:
-  # echo -n "Python:                               "
-  # if brew list python &> /dev/null; then
-  #  echo -e "$COL_GREEN[ OK ]$COL_RESET"
+  echo -n "Python:                               "
+  if brew list python &> /dev/null; then
+   echo -e "$COL_GREEN[ OK ]$COL_RESET"
 
-  # else
-  #   echo -e "$COL_RED[ Missing ]$COL_RESET"
-  #   echo "Installing Python..."
-  #   brew install python >> $LOGFILE 2>&1
-  #   echo ""
-  #   STATE=Bad
-  # fi
+  else
+    echo -e "$COL_RED[ Missing ]$COL_RESET"
+    echo "Installing Python with brew..."
+    brew install python >> $LOGFILE 2>&1
+    echo ""
+    STATE=Bad
+  fi
+
+  # Check for Otto in Homebrew:
+echo -n "Otto:                                 "
+if brew list otto &> /dev/null; then
+ echo -e "$COL_GREEN[ OK ]$COL_RESET"
+
+else
+  echo -e "$COL_RED[ Missing ]$COL_RESET"
+  echo "Installing Otto with brew..."
+  brew install otto >> $LOGFILE 2>&1
+  echo ""
+  STATE=Bad
+fi
 
   # Check for Packer in Homebrew:
   echo -n "Packer:                               "
@@ -153,7 +168,7 @@ check_system() {
 
   else
     echo -e "$COL_RED[ Missing ]$COL_RESET"
-    echo "Installing Packer..."
+    echo "Installing Packer with brew..."
     brew install packer >> $LOGFILE 2>&1
     echo ""
     STATE=Bad
@@ -170,7 +185,7 @@ check_system() {
     wget -c -q $DOCKERTOOLBOX_URL >> $LOGFILE 2>&1
     echo ""
     echo "Installing Docker Toolbox..."
-    sudo installer -pkg "DockerToolbox-1.10.1.pkg" -target / >> $LOGFILE 2>&1
+    sudo installer -pkg "$DOCKER_PKG" -target / >> $LOGFILE 2>&1
     echo ""
     STATE=Bad
   fi
@@ -200,7 +215,7 @@ check_system() {
     echo ""
     echo "Installing Vagrant..."
     echo ""
-    hdiutil attach vagrant_1.8.1.dmg >> $LOGFILE 2>&1
+    hdiutil attach $VAGRANT_PACKAGE >> $LOGFILE 2>&1
     sudo installer -pkg "/Volumes/Vagrant/Vagrant.pkg" -target / >> $LOGFILE 2>&1
     umount "/Volumes/Vagrant/" >> $LOGFILE 2>&1
     STATE=Bad
