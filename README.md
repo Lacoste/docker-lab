@@ -18,7 +18,7 @@
 
 ###### Install:
 ```
-curl -O https://raw.githubusercontent.com/pauldgifford/docker/master/docker-lab.sh
+curl -O https://raw.githubusercontent.com/pauldgifford/docker-lab/master/docker-lab.sh
 ```
 
 **Disclaimer: Use at your own risk, this has been tested on default installs of OS X Yosemite and El Capitan without any customizations.  This has not been tested on the Beta or Developer Previews from Apple.**
