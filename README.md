@@ -1,6 +1,6 @@
 
 ### Docker Lab Installer v1.2
-![alt text](http://static1.squarespace.com/static/50203aca84ae954efd2f9b70/t/55dd50b3e4b087612e6d759e/1455081593314/?format=150w "cloudcanuck")
+![alt text](http://static1.squarespace.com/static/50203aca84ae954efd2f9b70/t/55dd50b3e4b087612e6d759e/1455081593314/?format=50w "cloudcanuck")
 ###### Author: Paul Gifford <pgifford@vmware.com>
 ###### Blog Post: http://www.cloudcanuck.ca/posts/docker-lab-installer
 
